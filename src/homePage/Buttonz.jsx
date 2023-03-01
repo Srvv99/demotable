@@ -11,7 +11,7 @@ const Buttonz = ({length,postPerPage,pagesetting}) => {
   return (
     <>
     {arr.map((current,index)=>{
-      return <button key={index} onClick={()=>pagesetting(index+1)}>{index+1}</button>
+      return <button className="buttonz" key={index} onClick={()=>pagesetting(index+1)}>{index+1}</button>
     })}
     
     </>

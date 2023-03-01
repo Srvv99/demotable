@@ -1,5 +1,5 @@
 import React from 'react';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import "./product.css";
 import Buttonz from './Buttonz';
 
@@ -8,7 +8,8 @@ const Product = () => {
 
   const [pdata, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [postPerPage, setPostPerpage] = useState(10);
+  const [postPerPage, setPostPerpage] = useState(5);
+  const [show, setShow] = useState(false);
 
 
   const lastIndex = page * postPerPage;
@@ -19,8 +20,24 @@ const Product = () => {
     const res = await fetch("https://jsonplaceholder.typicode.com/posts");
     const data = await res.json();
     console.log(data);
-    setData(data);
+    // setData(data);
+    /////
+    if (show) {
+      let x = data.sort((a, b) => {
+        return b.id - a.id
+      });
 
+      setData(x);
+    }
+    
+    if (!show){
+      
+        let y = data.sort((a, b) => {
+          return a.id - b.id
+        });
+
+        setData(y);
+      }
   }
 
 
@@ -28,9 +45,9 @@ const Product = () => {
   useEffect(() => {
     fetchProduct();
 
-  }, [])
+  }, [show])
 
-
+  
 
   function pageSetting(selectedpage) {
     setPage(selectedpage);
@@ -90,18 +107,29 @@ const Product = () => {
   }
 
   let currentdatapage = pdata.slice(firstIndex, lastIndex);
-  
+
 
 
   return (
     <>
+    <div className="allwrapper">
+      <div className="wrapper">
+        <div className="recordlist">Total Record: {pdata.length}</div>
 
-      <div>Total Record: {pdata.length}</div>
+        <div className="dataperpage">
+          <span>Data per Page:</span>
+          <select onChange={e => setPostPerpage(e.target.value)}>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={15}>15</option>
+          </select>
+        </div>
+      </div>
       <div className="tableItem">
         <table width="100%" border="1" style={{ borderCollapse: "collapse", borderColor: "black" }}>
           <thead>
             <tr>
-              <th>id</th>
+              <th onClick={() => setShow(!show)}>id</th>
               <th>title</th>
               <th>Description</th>
             </tr>
@@ -113,7 +141,7 @@ const Product = () => {
               <input type="text" placeholder="search Description here..." onChange={inputhandler2}></input>
             </tr>
             {currentdatapage.map((element) => {
-              return <tr style={{ borderbackgroundColor: "black" }}>
+              return <tr style={{ borderbackgroundColor: "black"}}>
                 <td>{element.id}</td>
                 <td>{element.title}</td>
                 <td>{element.body}</td>
@@ -122,11 +150,12 @@ const Product = () => {
             })}
           </tbody>
         </table>
+
       </div>
 
-
-      <Buttonz length={pdata.length} postPerPage={postPerPage} pagesetting={pageSetting} />
-
+<div classname="buttondiv"><Buttonz length={pdata.length} postPerPage={postPerPage} pagesetting={pageSetting} /></div>
+      
+      </div>
     </>
   )
 }

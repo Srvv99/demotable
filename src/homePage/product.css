@@ -2,3 +2,49 @@
   height:500px;
   
 }
+
+.tablerows{
+  overflow-y: scroll;
+}
+
+
+.allwrapper{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.wrapper{
+  display:flex;
+  flex-direction: row;
+}
+
+.dataperpage{
+ margin-right:10px;
+ align-items: flex-end;
+}
+
+.recordlist{
+ margin-right:10px;
+}
+
+
+
+.buttonz{
+  background-color:rgb(169, 169, 230);
+ 
+}
+
+.buttonz:hover{
+  transform:scale(1.2);
+
+}
+
+.buttonz:active{
+  background-color: black;
+  color:white;
+}
+
+.buttondiv{
+  margin-top: 10px;
+}
