@@ -26,7 +26,7 @@ const Product = () => {
       let x = data.sort((a, b) => {
         return b.id - a.id
       });
-
+//add this line
       setData(x);
     }
     
